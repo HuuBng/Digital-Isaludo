@@ -13,6 +13,16 @@ This was made based on version BETA 1.11
 
 
 
+# Operating system / Tools
+
+- Windows 11
+
+- NetBeans 8.2
+
+- Java 1.8.0_202
+
+  
+
 # Special thanks to
 
 - Wil Su - designer of Isaludo
