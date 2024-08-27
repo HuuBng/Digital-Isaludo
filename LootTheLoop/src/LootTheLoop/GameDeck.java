@@ -28,7 +28,7 @@ public class GameDeck extends ArrayList<GameCard> {
 
     public void shuffle() {
         Random ran = new Random();
-        int x = ran.nextInt(9) + 2;
+        int x = ran.nextInt(9) + 2; // shuffle 2~10 times
         int i = 0;
         while (i < x) {
             Collections.shuffle(temple);
@@ -37,20 +37,22 @@ public class GameDeck extends ArrayList<GameCard> {
 
     }
 
-    public boolean addToNotes(GameCard e) throws IllegalArgumentException {
+    public boolean addToNotes(GameCard e) {
         if (e.getFace() == GameCard.Face.DOWN) {
-            System.err.println("Face is DOWN");
+            System.err.println("Can not add face DOWN to Notes");
             return false;
         }
 
-        if (e.getRank() == GameCard.Rank.JOKER) {
-            System.err.println("Can not add JOKER to Notes");
+        if (e.getRank() == GameCard.Rank.JOKER || e.getRank() == GameCard.Rank.JACK
+                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
+            System.err.println("Can not add " + e.getRank() + " to Notes");
             return false;
         }
 
         if (notes.size() < 3) {
             notes.add(e);
-            return temple.remove(e);
+            temple.remove(e);
+            return true;
         } else {
             System.err.println("Notes is FULL");
             return false;
@@ -62,9 +64,21 @@ public class GameDeck extends ArrayList<GameCard> {
         notes.remove(e);
     }
 
-    public void addToDiscard(GameCard e) {
+    public boolean addToScore(GameCard e) {
+        if (e.getFace() == GameCard.Face.DOWN) {
+            System.err.println("Can not add face DOWN to Score");
+            return false;
+        }
+
+        if (e.getRank() == GameCard.Rank.JOKER || e.getRank() == GameCard.Rank.JACK
+                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
+            System.err.println("Can not add " + e.getRank() + " to Score");
+            return false;
+        }
+
         score.add(e);
         temple.remove(e);
+        return true;
     }
 
     public void list(ArrayList gameList) {
@@ -82,10 +96,6 @@ public class GameDeck extends ArrayList<GameCard> {
         }
 
         System.out.println("\n--- Notes ---");
-//        notes.forEach((ngc) -> {
-//            System.out.println(ngc);
-//        });
-
         int ni = 1;
         for (int i = 0; i < notes.size(); i++) {
             System.out.println(ni + ": " + notes.get(i));
@@ -144,8 +154,8 @@ public class GameDeck extends ArrayList<GameCard> {
             movement = 10;
         }
 
-        int i = 0;
-        while (i <= movement) {
+        int i = -1;
+        while (i < movement) {
             tmp.add(temple.get(temple.size() - 1));
             temple.remove(temple.size() - 1);
             i++;
