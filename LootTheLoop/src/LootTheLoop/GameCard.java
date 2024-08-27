@@ -46,9 +46,9 @@ public class GameCard {
     @Override
     public String toString() {
         if (face == Face.DOWN) {
-            return "--- of --- face " + face;
+            return "--- of ---";
         } else {
-            return rank + " of " + suit + " face " + face;
+            return rank + " of " + suit;
         }
     }
 
