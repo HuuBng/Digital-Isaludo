@@ -2,16 +2,16 @@ package LootTheLoop;
 
 public class GameCard {
 
-    enum Suit {
-        JOKER, HEART, DIAMOND, CLUB, SPADE;
+    public enum Suit {
+        JOKER, HEART, DIAMOND, CLUB, SPADE
     }
 
-    enum Rank {
-        JOKER, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING;
+    public enum Rank {
+        JOKER, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
     }
 
-    enum Face {
-        UP, DOWN;
+    public enum Face {
+        UP, DOWN
     }
 
     private Rank rank;

@@ -104,5 +104,53 @@ public class GameDeck extends ArrayList<GameCard> {
 
     public void actExplore(GameCard e) {
 
+        ArrayList<GameCard> tmp = new ArrayList<>();
+
+        int movement = 0;
+
+        if (e.getRank() == GameCard.Rank.TWO) {
+            movement = 2;
+        }
+
+        if (e.getRank() == GameCard.Rank.THREE) {
+            movement = 3;
+        }
+
+        if (e.getRank() == GameCard.Rank.FOUR) {
+            movement = 4;
+        }
+
+        if (e.getRank() == GameCard.Rank.FIVE) {
+            movement = 5;
+        }
+
+        if (e.getRank() == GameCard.Rank.SIX) {
+            movement = 6;
+        }
+
+        if (e.getRank() == GameCard.Rank.SEVEN) {
+            movement = 7;
+        }
+
+        if (e.getRank() == GameCard.Rank.EIGHT) {
+            movement = 8;
+        }
+
+        if (e.getRank() == GameCard.Rank.NINE) {
+            movement = 9;
+        }
+
+        if (e.getRank() == GameCard.Rank.TEN) {
+            movement = 10;
+        }
+
+        int i = 0;
+        while (i <= movement) {
+            tmp.add(temple.get(temple.size() - 1));
+            temple.remove(temple.size() - 1);
+            i++;
+        }
+        Collections.reverse(tmp);
+        temple.addAll(0, tmp);
     }
 }
