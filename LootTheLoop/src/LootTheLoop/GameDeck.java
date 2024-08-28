@@ -118,7 +118,7 @@ public class GameDeck extends ArrayList<GameCard> {
 
         ArrayList<GameCard> tmp = new ArrayList<>();
 
-        int movement = 0;
+        int movement;
 
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not explore face DOWN card");
@@ -210,7 +210,7 @@ public class GameDeck extends ArrayList<GameCard> {
         }
 
         int point = 0;
-        int tmp = 0;
+        int tmp;
 
         System.out.println("\n--- Score ---");
         int si = 1;
