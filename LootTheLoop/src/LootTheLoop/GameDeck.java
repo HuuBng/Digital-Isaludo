@@ -44,7 +44,8 @@ public class GameDeck extends ArrayList<GameCard> {
         }
 
         if (e.getRank() == GameCard.Rank.JOKER || e.getRank() == GameCard.Rank.JACK
-                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
+                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING
+                || e.getRank() == GameCard.Rank.ACE) {
             System.err.println("Can not add " + e.getRank() + " to Notes");
             return false;
         }
@@ -103,64 +104,82 @@ public class GameDeck extends ArrayList<GameCard> {
         }
     }
 
-    public void actLookAround() {
+    public boolean actLookAround() {
         if (temple.get(temple.size() - 1).getFace() == GameCard.Face.DOWN) {
             temple.get(temple.size() - 1).faceUp();
             temple.get(temple.size() - 2).faceUp();
+            return true;
         } else {
             System.err.println("Top card is face UP");
+            return false;
         }
     }
 
-    public void actExplore(GameCard e) {
+    public boolean actExplore(GameCard e) {
 
         ArrayList<GameCard> tmp = new ArrayList<>();
 
         int movement = 0;
 
-        if (e.getRank() == GameCard.Rank.TWO) {
-            movement = 2;
-        }
-
-        if (e.getRank() == GameCard.Rank.THREE) {
-            movement = 3;
-        }
-
-        if (e.getRank() == GameCard.Rank.FOUR) {
-            movement = 4;
-        }
-
-        if (e.getRank() == GameCard.Rank.FIVE) {
-            movement = 5;
-        }
-
-        if (e.getRank() == GameCard.Rank.SIX) {
-            movement = 6;
-        }
-
-        if (e.getRank() == GameCard.Rank.SEVEN) {
-            movement = 7;
-        }
-
-        if (e.getRank() == GameCard.Rank.EIGHT) {
-            movement = 8;
-        }
-
-        if (e.getRank() == GameCard.Rank.NINE) {
-            movement = 9;
-        }
-
-        if (e.getRank() == GameCard.Rank.TEN) {
-            movement = 10;
+        if (null == e.getRank()) {
+            System.err.println("Can not explore " + e.getRank() + " card");
+            return false;
+        } else {
+            switch (e.getRank()) {
+                case TWO:
+                    movement = 2;
+                    break;
+                case THREE:
+                    movement = 3;
+                    break;
+                case FOUR:
+                    movement = 4;
+                    break;
+                case FIVE:
+                    movement = 5;
+                    break;
+                case SIX:
+                    movement = 6;
+                    break;
+                case SEVEN:
+                    movement = 7;
+                    break;
+                case EIGHT:
+                    movement = 8;
+                    break;
+                case NINE:
+                    movement = 9;
+                    break;
+                case TEN:
+                    movement = 10;
+                    break;
+                default:
+                    System.err.println("Can not explore " + e.getRank() + " card");
+                    return false;
+            }
         }
 
         int i = -1;
+
         while (i < movement) {
             tmp.add(temple.get(temple.size() - 1));
             temple.remove(temple.size() - 1);
             i++;
         }
+
         Collections.reverse(tmp);
         temple.addAll(0, tmp);
+        return true;
+    }
+
+    public boolean isDead(GameCard e) {
+        if (e.getFace() == GameCard.Face.UP) {
+            if (e.getRank() == GameCard.Rank.JACK || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
+                System.err.println("You landed in a TRAP room");
+                System.err.println("\n === GAME OVER ===");
+                return true;
+            }
+        }
+        return false;
     }
 }
