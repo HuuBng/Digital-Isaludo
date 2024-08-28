@@ -181,7 +181,8 @@ public class GameDeck extends ArrayList<GameCard> {
             return false;
         }
 
-        return e.getRank() == GameCard.Rank.JACK
+        return e.getRank() == GameCard.Rank.ACE
+                || e.getRank() == GameCard.Rank.JACK
                 || e.getRank() == GameCard.Rank.QUEEN
                 || e.getRank() == GameCard.Rank.KING;
     }
