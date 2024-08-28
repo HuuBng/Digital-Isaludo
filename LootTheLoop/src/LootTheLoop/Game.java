@@ -19,61 +19,117 @@ public class Game {
         game.add("Action: Mark a path");
         game.add("Action: Return to marked path");
         game.add("Action: Take jewel/trinket");
-        game.add("View temple");
-        game.add("View notes");
+        game.add("View temple/notes/score");
+
+        ArrayList<String> cardChoice = new ArrayList<>();
+        cardChoice.add("1st card");
+        cardChoice.add("2nd card");
+
+        ArrayList<String> decks = new ArrayList<>();
+        decks.add("Temple");
+        decks.add("Notes");
+        decks.add("Score");
 
         Menu menu = new Menu();
         int choice;
+        int choice2;
 
         System.out.println("--- Are you ready? ---");
-        System.out.println("p/s: the top card is at the bottom.");
+        System.out.println("p/s: the top card is at the bottom in every deck.");
 
         do {
-            System.out.println("-----------------------------------");
+            System.out.println("\n-----------------------------------");
             System.out.println("\n       Loot the Loop (digital)");
             System.out.println("\n What is your action?");
             System.out.println();
 
             choice = menu.int_getChoice(game);
             switch (choice) {
-                case 1:
-                    deck.actLookAround();
+                case 1: // Action: Look Around
+                    if (deck.actLookAround()) {
+                        System.out.println("=== Looking around ===");
+                        deck.list(deck.temple);
+                    }
+                    break;
+
+                case 2: // Action: Explore
+                    choice2 = menu.int_getChoice(cardChoice);
+
+                    if (choice2 < 1 || choice2 > 2) {
+                        System.err.println("=== Action canceled ===");
+                        break;
+                    }
+
+                    if (deck.actExplore(deck.temple.get(deck.temple.size() - choice2))) {
+                        System.out.println("=== Exploring ===");
+                        deck.list(deck.temple);
+                        if (deck.isDead(deck.temple.get(deck.temple.size() - 1))) {
+                            throw new IllegalArgumentException("You are DEAD!!!");
+                        }
+                    }
+
+                    break;
+
+                case 3: // Action: Mark a path
+                    choice2 = menu.int_getChoice(cardChoice);
+
+                    if (choice2 < 1 || choice2 > 2) {
+                        System.err.println("=== Action canceled ===");
+                        break;
+                    }
+
+                    if (deck.addToNotes(deck.temple.get(deck.temple.size() - choice2))) {
+                        System.out.println("=== Path marked ===");
+                        deck.list(deck.temple);
+                    }
+
+                    break;
+
+                case 4: // Action: Return to marked path
+                    cardChoice.add("3rd card");
+                    deck.list(deck.notes);
+
+                    choice2 = menu.int_getChoice(cardChoice);
+                    cardChoice.remove(cardChoice.size() - 1);
+
+                    if (choice2 < 1 || choice2 > deck.notes.size()) {
+                        System.err.println("=== Action canceled ===");
+                        break;
+                    }
+
+                    deck.addToTemple(deck.notes.get(deck.notes.size() - choice2));
+                    System.out.println("=== Returned to marked path ===");
                     deck.list(deck.temple);
                     break;
-                case 2:
-                    int choice2 = 0;
-                    do {
-                        System.out.println("Which card?(choose 1 or 2) \n1. top card\n2. top 2 card");
-                        choice2 = Integer.parseInt(sc.nextLine());
-                    } while (choice2 < 1 || choice2 > 2);
-                    deck.actExplore(deck.temple.get(deck.temple.size() - choice2));
+
+                case 5: // Action: Take jewel/trinket
+                    if (deck.addToScore(deck.temple.get(deck.temple.size() - 1))) {
+                        System.out.println("=== Card taken ===");
+                        deck.list(deck.temple);
+                    }
+
                     break;
-                case 3:
-                    int choice3 = 0;
-                    do {
-                        System.out.println("Which card?(choose 1 or 2) \n1. top card\n2. top 2 card");
-                        choice3 = Integer.parseInt(sc.nextLine());
-                    } while (choice3 < 1 || choice3 > 2);
-                    deck.addToNotes(deck.temple.get(deck.temple.size() - choice3));
+
+                case 6: // View temple/notes/score
+                    choice2 = menu.int_getChoice(decks);
+                    switch (choice2) {
+                        case 1:
+                            deck.list(deck.temple);
+                            break;
+                        case 2:
+                            deck.list(deck.notes);
+                            break;
+                        case 3:
+                            deck.list(deck.score);
+                            break;
+                        default:
+                            System.err.println("=== Action canceled ===");
+                    }
                     break;
-                case 4:
-                    int choice4 = 0;
-                    deck.list(deck.notes);
-                    do {
-                        System.out.println("Which card?(choose 1, 2, 3)");
-                        choice4 = Integer.parseInt(sc.nextLine());
-                    } while (choice4 < 1 || choice4 > 3);
-                    deck.addToTemple(deck.notes.get(choice4));
-                    break;
-                case 5:
-                    deck.addToScore(deck.temple.get(deck.temple.size() - 1));
-                    break;
-                case 6:
-                    deck.list(deck.temple);
-                    break;
-                case 7:
-                    deck.list(deck.notes);
-                    break;
+
+//                case 7:
+//                    
+//                    break;
                 default:
                     System.out.println("Thank you for playing!!!");
             }
