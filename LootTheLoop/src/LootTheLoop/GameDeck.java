@@ -34,7 +34,6 @@ public class GameDeck extends ArrayList<GameCard> {
             Collections.shuffle(temple);
             i++;
         }
-
     }
 
     public boolean addToNotes(GameCard e) {
@@ -122,7 +121,7 @@ public class GameDeck extends ArrayList<GameCard> {
         int movement = 0;
 
         if (e.getFace() == GameCard.Face.DOWN) {
-            System.err.println("Can explore face DOWN card");
+            System.err.println("Can not explore face DOWN card");
             return false;
         }
 
@@ -178,13 +177,82 @@ public class GameDeck extends ArrayList<GameCard> {
     }
 
     public boolean isDead(GameCard e) {
-        if (e.getFace() == GameCard.Face.UP) {
-            if (e.getRank() == GameCard.Rank.JACK || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
-                System.err.println("You landed in a TRAP room");
-                System.err.println("\n === GAME OVER ===");
-                return true;
+        if (e.getFace() == GameCard.Face.DOWN) {
+            return false;
+        }
+
+        return e.getRank() == GameCard.Rank.JACK
+                || e.getRank() == GameCard.Rank.QUEEN
+                || e.getRank() == GameCard.Rank.KING;
+    }
+
+    public boolean exitTemple(GameCard e) {
+        if (e.getFace() == GameCard.Face.DOWN) {
+            System.err.println("Can not exit on face DOWN card");
+            return false;
+        }
+
+        if (e.getRank() != GameCard.Rank.JOKER) {
+            System.err.println("Must exit on JOKER card");
+            return false;
+        }
+
+        int count = 0;
+        for (GameCard sc : score) {
+            if (sc.getRank() == GameCard.Rank.ACE) {
+                count++;
             }
         }
-        return false;
+
+        if (count != 4) {
+            System.err.println("You have not collected enough ACES");
+            return false;
+        }
+
+        int point = 0;
+        int tmp = 0;
+
+        System.out.println("\n--- Score ---");
+        int si = 1;
+        for (int i = 0; i < score.size(); i++) {
+            System.out.println(si + ": " + score.get(i));
+
+            switch (score.get(i).getRank()) {
+                case TWO:
+                    tmp = 2;
+                    break;
+                case THREE:
+                    tmp = 3;
+                    break;
+                case FOUR:
+                    tmp = 4;
+                    break;
+                case FIVE:
+                    tmp = 5;
+                    break;
+                case SIX:
+                    tmp = 6;
+                    break;
+                case SEVEN:
+                    tmp = 7;
+                    break;
+                case EIGHT:
+                    tmp = 8;
+                    break;
+                case NINE:
+                    tmp = 9;
+                    break;
+                case TEN:
+                    tmp = 10;
+                    break;
+                default:
+                    tmp = 0;
+            }
+            point += tmp;
+            si++;
+        }
+
+        System.out.println("Your score is: " + point);
+        return true;
     }
 }
