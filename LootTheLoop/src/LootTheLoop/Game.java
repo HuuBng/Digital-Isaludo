@@ -20,6 +20,7 @@ public class Game {
         game.add("Action: Return to marked path");
         game.add("Action: Take jewel/trinket");
         game.add("View temple/notes/score");
+        game.add("Exit temple");
 
         ArrayList<String> cardChoice = new ArrayList<>();
         cardChoice.add("1st card");
@@ -49,6 +50,11 @@ public class Game {
                     if (deck.actLookAround()) {
                         System.out.println("=== Looking around ===");
                         deck.list(deck.temple);
+                        if (deck.isDead(deck.temple.get(deck.temple.size() - 1)) && deck.isDead(deck.temple.get(deck.temple.size() - 2)) && deck.notes.isEmpty()) {
+                            System.err.println("You landed in a TRAP room");
+                            System.err.println("\n === GAME OVER ===");
+                            throw new IllegalArgumentException("You are DEAD!!!");
+                        }
                     }
                     break;
 
@@ -64,6 +70,8 @@ public class Game {
                         System.out.println("=== Exploring ===");
                         deck.list(deck.temple);
                         if (deck.isDead(deck.temple.get(deck.temple.size() - 1))) {
+                            System.err.println("You landed in a TRAP room");
+                            System.err.println("\n === GAME OVER ===");
                             throw new IllegalArgumentException("You are DEAD!!!");
                         }
                     }
@@ -127,9 +135,11 @@ public class Game {
                     }
                     break;
 
-//                case 7:
-//                    
-//                    break;
+                case 7: // Exit temple
+                    if (deck.exitTemple(deck.temple.get(deck.temple.size() - 1))) {
+                        throw new IllegalStateException("=== THE END ===");
+                    }
+                    break;
                 default:
                     System.out.println("Thank you for playing!!!");
             }
