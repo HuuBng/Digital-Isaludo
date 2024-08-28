@@ -121,6 +121,11 @@ public class GameDeck extends ArrayList<GameCard> {
 
         int movement = 0;
 
+        if (e.getFace() == GameCard.Face.DOWN) {
+            System.err.println("Can explore face DOWN card");
+            return false;
+        }
+
         if (null == e.getRank()) {
             System.err.println("Can not explore " + e.getRank() + " card");
             return false;
