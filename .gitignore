@@ -29,3 +29,5 @@ replay_pid*
 *.properties
 *.docx
 *.doc
+/LootTheLoop/build/
+/LootTheLoop/dist/
