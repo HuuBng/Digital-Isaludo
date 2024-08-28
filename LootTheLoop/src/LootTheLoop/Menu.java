@@ -13,7 +13,7 @@ public class Menu {
         }
         System.out.print("Please choose an option: 1..." + N + ": ");
 
-        int response = Integer.parseInt(new Scanner(System.in).nextLine());
+        int response = Integer.parseInt(new Scanner(System.in).nextLine().trim());
         return response;
     }
 }
