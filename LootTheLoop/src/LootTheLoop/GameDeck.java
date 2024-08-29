@@ -83,22 +83,6 @@ public class GameDeck extends ArrayList<GameCard> {
         });
     }
 
-    public void listAll() {
-        System.out.println("\n--- Temple ---");
-        int ti = 1;
-        for (int i = 0; i < temple.size(); i++) {
-            System.out.println(ti + ": " + temple.get(i));
-            ti++;
-        }
-
-        System.out.println("\n--- Notes ---");
-        int ni = 1;
-        for (int i = 0; i < notes.size(); i++) {
-            System.out.println(ni + ": " + notes.get(i));
-            ni++;
-        }
-    }
-
     public boolean actLookAround() {
         if (temple.get(temple.size() - 1).getFace() == GameCard.Face.DOWN) {
             temple.get(temple.size() - 1).faceUp();
@@ -210,9 +194,8 @@ public class GameDeck extends ArrayList<GameCard> {
         int tmp;
 
         System.out.println("\n--- Score ---");
-        int si = 1;
         for (int i = 0; i < score.size(); i++) {
-            System.out.println(si + ": " + score.get(i));
+            System.out.println((i + 1) + ": " + score.get(i));
 
             switch (score.get(i).getRank()) {
                 case TWO:
@@ -246,7 +229,6 @@ public class GameDeck extends ArrayList<GameCard> {
                     tmp = 0;
             }
             point += tmp;
-            si++;
         }
 
         System.out.println("Your score is: " + point);
