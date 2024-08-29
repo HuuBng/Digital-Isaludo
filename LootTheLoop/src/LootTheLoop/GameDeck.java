@@ -27,12 +27,8 @@ public class GameDeck extends ArrayList<GameCard> {
     }
 
     public void shuffle() {
-        Random ran = new Random();
-        int x = ran.nextInt(9) + 2; // shuffle 2~10 times
-        int i = 0;
-        while (i < x) {
+        for (int i = 0; i < 100; i++) {
             Collections.shuffle(temple);
-            i++;
         }
     }
 
