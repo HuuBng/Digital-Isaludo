@@ -139,10 +139,10 @@ public class Game {
                         throw new IllegalStateException("=== THE END ===");
                     }
                     break;
+
                 default:
                     System.out.println("Thank you for playing!!!");
             }
         } while (choice > 0 && choice <= game.size());
-
     }
 }

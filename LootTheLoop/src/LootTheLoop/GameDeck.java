@@ -3,17 +3,17 @@ package LootTheLoop;
 import java.util.*;
 
 public class GameDeck extends ArrayList<GameCard> {
-
+    
     ArrayList<GameCard> temple;
     ArrayList<GameCard> notes;
     ArrayList<GameCard> score;
-
+    
     public GameDeck() {
         temple = new ArrayList<>();
         notes = new ArrayList<>();
         score = new ArrayList<>();
     }
-
+    
     public void reset() {
         // Add a joker
         temple.add(new GameCard(GameCard.Rank.JOKER, GameCard.Suit.JOKER));
@@ -25,29 +25,28 @@ public class GameDeck extends ArrayList<GameCard> {
             }
         }
     }
-
+    
     public void shuffle() {
         for (int i = 0; i < 100; i++) {
             Collections.shuffle(temple);
         }
     }
-
+    
     public boolean addToNotes(int index) {
-
+        
         GameCard e = temple.get(temple.size() - index);
-
+        
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not add face DOWN to Notes");
             return false;
         }
-
-        if (e.getRank() == GameCard.Rank.JOKER || e.getRank() == GameCard.Rank.JACK
-                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING
-                || e.getRank() == GameCard.Rank.ACE) {
+        
+        String eType = e.getRankType();
+        if (eType.equals("J") || eType.equals("T") || eType.equals("A")) {
             System.err.println("Can not add " + e.getRank() + " to Notes");
             return false;
         }
-
+        
         if (notes.size() < 3) {
             notes.add(e);
             temple.remove(e);
@@ -57,39 +56,39 @@ public class GameDeck extends ArrayList<GameCard> {
             return false;
         }
     }
-
+    
     public void addToTemple(int index) {
         GameCard e = temple.get(temple.size() - index);
         temple.add(e);
         notes.remove(e);
     }
-
+    
     public boolean addToScore(int index) {
-
+        
         GameCard e = temple.get(temple.size() - index);
-
+        
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not add face DOWN to Score");
             return false;
         }
-
-        if (e.getRank() == GameCard.Rank.JOKER || e.getRank() == GameCard.Rank.JACK
-                || e.getRank() == GameCard.Rank.QUEEN || e.getRank() == GameCard.Rank.KING) {
+        
+        String eType = e.getRankType();
+        if (eType.equals("J") || eType.equals("T")) {
             System.err.println("Can not add " + e.getRank() + " to Score");
             return false;
         }
-
+        
         score.add(e);
         temple.remove(e);
         return true;
     }
-
+    
     public void list(ArrayList gameList) {
         gameList.forEach((gc) -> {
             System.out.println(gc);
         });
     }
-
+    
     public boolean actLookAround() {
         if (temple.get(temple.size() - 1).getFace() == GameCard.Face.DOWN) {
             temple.get(temple.size() - 1).faceUp();
@@ -100,20 +99,20 @@ public class GameDeck extends ArrayList<GameCard> {
             return false;
         }
     }
-
+    
     public boolean actExplore(int index) {
-
+        
         GameCard e = temple.get(temple.size() - index);
-
+        
         ArrayList<GameCard> tmp = new ArrayList<>();
-
+        
         int movement;
-
+        
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not explore face DOWN card");
             return false;
         }
-
+        
         if (null == e.getRank()) {
             System.err.println("Can not explore " + e.getRank() + " card");
             return false;
@@ -151,38 +150,37 @@ public class GameDeck extends ArrayList<GameCard> {
                     return false;
             }
         }
-
+        
         int i = -1;
-
+        
         while (i < movement) {
             tmp.add(temple.get(temple.size() - 1));
             temple.remove(temple.size() - 1);
             i++;
         }
-
+        
         Collections.reverse(tmp);
         temple.addAll(0, tmp);
         return true;
     }
-
+    
     public boolean isDead(int index) {
-
+        
         GameCard e = temple.get(temple.size() - index);
-
+        
         if (e.getFace() == GameCard.Face.DOWN) {
             return false;
         }
-
-        return e.getRank() == GameCard.Rank.JACK
-                || e.getRank() == GameCard.Rank.QUEEN
-                || e.getRank() == GameCard.Rank.KING;
+        
+        String eType = e.getRankType();
+        return eType.equals("J") || eType.equals("T");
     }
-
+    
     public boolean isDead2() {
-
+        
         String firCard = temple.get(temple.size() - 1).getRankType();
         String secCard = temple.get(temple.size() - 2).getRankType();
-
+        
         if (firCard.equals("J") || firCard.equals("T")) {
             if (secCard.equals("J") || secCard.equals("T") || secCard.equals("A")) {
                 return true;
@@ -192,43 +190,43 @@ public class GameDeck extends ArrayList<GameCard> {
                 return true;
             }
         }
-
+        
         return false;
     }
-
+    
     public boolean exitTemple(int index) {
-
+        
         GameCard e = temple.get(temple.size() - index);
-
+        
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not exit on face DOWN card");
             return false;
         }
-
+        
         if (e.getRank() != GameCard.Rank.JOKER) {
             System.err.println("Must exit on JOKER card");
             return false;
         }
-
+        
         int count = 0;
         for (GameCard sc : score) {
             if (sc.getRank() == GameCard.Rank.ACE) {
                 count++;
             }
         }
-
+        
         if (count != 4) {
             System.err.println("You have not collected enough ACES");
             return false;
         }
-
+        
         int point = 0;
         int tmp;
-
+        
         System.out.println("\n--- Score ---");
         for (int i = 0; i < score.size(); i++) {
             System.out.println((i + 1) + ": " + score.get(i));
-
+            
             switch (score.get(i).getRank()) {
                 case TWO:
                     tmp = 2;
@@ -262,7 +260,7 @@ public class GameDeck extends ArrayList<GameCard> {
             }
             point += tmp;
         }
-
+        
         System.out.println("Your score is: " + point);
         return true;
     }
