@@ -7,7 +7,13 @@ public class GameCard {
     }
 
     public enum Rank {
-        JOKER, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+        JOKER("J"), ACE("A"), TWO("M"), THREE("M"), FOUR("M"), FIVE("M"), SIX("M"), SEVEN("M"), EIGHT("M"), NINE("M"), TEN("M"), JACK("T"), QUEEN("T"), KING("T");
+
+        private final String type;
+
+        Rank(String type) {
+            this.type = type;
+        }
     }
 
     public enum Face {
@@ -33,6 +39,10 @@ public class GameCard {
 
     public Rank getRank() {
         return rank;
+    }
+
+    public String getRankType() {
+        return rank.type;
     }
 
     public Suit getSuit() {
