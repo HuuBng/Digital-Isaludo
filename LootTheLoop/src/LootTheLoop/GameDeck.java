@@ -173,10 +173,27 @@ public class GameDeck extends ArrayList<GameCard> {
             return false;
         }
 
-        return e.getRank() == GameCard.Rank.ACE
-                || e.getRank() == GameCard.Rank.JACK
+        return e.getRank() == GameCard.Rank.JACK
                 || e.getRank() == GameCard.Rank.QUEEN
                 || e.getRank() == GameCard.Rank.KING;
+    }
+
+    public boolean isDead2() {
+
+        String firCard = temple.get(temple.size() - 1).getRankType();
+        String secCard = temple.get(temple.size() - 2).getRankType();
+
+        if (firCard.equals("J") || firCard.equals("T")) {
+            if (secCard.equals("J") || secCard.equals("T") || secCard.equals("A")) {
+                return true;
+            }
+        } else if (firCard.equals("A")) {
+            if (secCard.equals("J") || secCard.equals("T")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean exitTemple(int index) {

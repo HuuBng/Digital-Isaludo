@@ -49,7 +49,7 @@ public class Game {
                     if (deck.actLookAround()) {
                         System.out.println("=== Looking around ===");
                         deck.list(deck.temple);
-                        if (deck.isDead(1) && deck.isDead(2) && deck.notes.isEmpty()) {
+                        if (deck.isDead2() && deck.notes.isEmpty()) {
                             System.err.println("You landed in a TRAP room");
                             System.err.println("\n === GAME OVER ===");
                             throw new IllegalArgumentException("You are DEAD!!!");
