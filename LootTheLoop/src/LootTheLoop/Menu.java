@@ -1,6 +1,7 @@
 package LootTheLoop;
 
 import java.util.*;
+import java.util.regex.*;
 
 public class Menu {
 
@@ -11,9 +12,18 @@ public class Menu {
         for (int i = 0; i < N; i++) {
             System.out.println((i + 1) + ". " + Opts.get(i));
         }
-        System.out.print("Please choose an option: 1..." + N + ": ");
 
-        int response = Integer.parseInt(new Scanner(System.in).nextLine().trim());
-        return response;
+        String inputString;
+        Pattern inputPattern = Pattern.compile("\\d+");
+
+        do {
+            System.out.print("Please choose an option: 1..." + N + ": ");
+            inputString = new Scanner(System.in).nextLine().trim();
+            if (!inputPattern.matcher(inputString).find()) {
+                System.err.println("Please enter a digit!!");
+            }
+        } while (!inputPattern.matcher(inputString).find());
+
+        return Integer.parseInt(inputString);
     }
 }

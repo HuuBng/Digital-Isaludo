@@ -5,7 +5,6 @@ import java.util.*;
 public class Game {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
         // Prepare temple
         GameDeck deck = new GameDeck();
@@ -50,7 +49,7 @@ public class Game {
                     if (deck.actLookAround()) {
                         System.out.println("=== Looking around ===");
                         deck.list(deck.temple);
-                        if (deck.isDead(deck.temple.get(deck.temple.size() - 1)) && deck.isDead(deck.temple.get(deck.temple.size() - 2)) && deck.notes.isEmpty()) {
+                        if (deck.isDead2() && deck.notes.isEmpty()) {
                             System.err.println("You landed in a TRAP room");
                             System.err.println("\n === GAME OVER ===");
                             throw new IllegalArgumentException("You are DEAD!!!");
@@ -66,10 +65,10 @@ public class Game {
                         break;
                     }
 
-                    if (deck.actExplore(deck.temple.get(deck.temple.size() - choice2))) {
+                    if (deck.actExplore(choice2)) {
                         System.out.println("=== Exploring ===");
                         deck.list(deck.temple);
-                        if (deck.isDead(deck.temple.get(deck.temple.size() - 1))) {
+                        if (deck.isDead(1)) {
                             System.err.println("You landed in a TRAP room");
                             System.err.println("\n === GAME OVER ===");
                             throw new IllegalArgumentException("You are DEAD!!!");
@@ -86,7 +85,7 @@ public class Game {
                         break;
                     }
 
-                    if (deck.addToNotes(deck.temple.get(deck.temple.size() - choice2))) {
+                    if (deck.addToNotes(choice2)) {
                         System.out.println("=== Path marked ===");
                         deck.list(deck.temple);
                     }
@@ -105,13 +104,13 @@ public class Game {
                         break;
                     }
 
-                    deck.addToTemple(deck.notes.get(deck.notes.size() - choice2));
+                    deck.addToTemple(choice2);
                     System.out.println("=== Returned to marked path ===");
                     deck.list(deck.temple);
                     break;
 
                 case 5: // Action: Take jewel/trinket
-                    if (deck.addToScore(deck.temple.get(deck.temple.size() - 1))) {
+                    if (deck.addToScore(1)) {
                         System.out.println("=== Card taken ===");
                         deck.list(deck.temple);
                     }
@@ -136,14 +135,14 @@ public class Game {
                     break;
 
                 case 7: // Exit temple
-                    if (deck.exitTemple(deck.temple.get(deck.temple.size() - 1))) {
+                    if (deck.exitTemple(1)) {
                         throw new IllegalStateException("=== THE END ===");
                     }
                     break;
+
                 default:
                     System.out.println("Thank you for playing!!!");
             }
         } while (choice > 0 && choice <= game.size());
-
     }
 }
