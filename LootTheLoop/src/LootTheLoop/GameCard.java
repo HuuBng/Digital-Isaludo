@@ -44,7 +44,7 @@ public class GameCard {
     public String getRankType() {
         return rank.type;
     }
-
+  
     public Suit getSuit() {
         return suit;
     }
