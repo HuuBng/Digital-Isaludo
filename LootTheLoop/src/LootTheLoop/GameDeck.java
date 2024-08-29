@@ -32,7 +32,10 @@ public class GameDeck extends ArrayList<GameCard> {
         }
     }
 
-    public boolean addToNotes(GameCard e) {
+    public boolean addToNotes(int index) {
+
+        GameCard e = temple.get(temple.size() - index);
+
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not add face DOWN to Notes");
             return false;
@@ -55,12 +58,16 @@ public class GameDeck extends ArrayList<GameCard> {
         }
     }
 
-    public void addToTemple(GameCard e) {
+    public void addToTemple(int index) {
+        GameCard e = temple.get(temple.size() - index);
         temple.add(e);
         notes.remove(e);
     }
 
-    public boolean addToScore(GameCard e) {
+    public boolean addToScore(int index) {
+
+        GameCard e = temple.get(temple.size() - index);
+
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not add face DOWN to Score");
             return false;
@@ -94,7 +101,9 @@ public class GameDeck extends ArrayList<GameCard> {
         }
     }
 
-    public boolean actExplore(GameCard e) {
+    public boolean actExplore(int index) {
+
+        GameCard e = temple.get(temple.size() - index);
 
         ArrayList<GameCard> tmp = new ArrayList<>();
 
@@ -156,7 +165,10 @@ public class GameDeck extends ArrayList<GameCard> {
         return true;
     }
 
-    public boolean isDead(GameCard e) {
+    public boolean isDead(int index) {
+
+        GameCard e = temple.get(temple.size() - index);
+
         if (e.getFace() == GameCard.Face.DOWN) {
             return false;
         }
@@ -167,7 +179,10 @@ public class GameDeck extends ArrayList<GameCard> {
                 || e.getRank() == GameCard.Rank.KING;
     }
 
-    public boolean exitTemple(GameCard e) {
+    public boolean exitTemple(int index) {
+
+        GameCard e = temple.get(temple.size() - index);
+
         if (e.getFace() == GameCard.Face.DOWN) {
             System.err.println("Can not exit on face DOWN card");
             return false;
