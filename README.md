@@ -11,7 +11,7 @@ https://boardgamegeek.com/thread/2587399/isaludo-ten-new-solo-card-games-playabl
 
 This was made based on version BETA 1.11
 
-
+`test`
 
 # Operating system / Tools
 
