@@ -1,6 +1,7 @@
 package LootTheLoop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameDeck extends ArrayList<GameCard> {
     
@@ -58,7 +59,7 @@ public class GameDeck extends ArrayList<GameCard> {
     }
     
     public void addToTemple(int index) {
-        GameCard e = temple.get(temple.size() - index);
+        GameCard e = notes.get(notes.size() - index);
         temple.add(e);
         notes.remove(e);
     }
@@ -83,10 +84,8 @@ public class GameDeck extends ArrayList<GameCard> {
         return true;
     }
     
-    public void list(ArrayList gameList) {
-        gameList.forEach((gc) -> {
-            System.out.println(gc);
-        });
+    public void list(ArrayList<GameCard> gameList) {
+        gameList.forEach(System.out::println);
     }
     
     public boolean actLookAround() {
@@ -182,13 +181,9 @@ public class GameDeck extends ArrayList<GameCard> {
         String secCard = temple.get(temple.size() - 2).getRankType();
         
         if (firCard.equals("J") || firCard.equals("T")) {
-            if (secCard.equals("J") || secCard.equals("T") || secCard.equals("A")) {
-                return true;
-            }
+            return secCard.equals("J") || secCard.equals("T") || secCard.equals("A");
         } else if (firCard.equals("A")) {
-            if (secCard.equals("J") || secCard.equals("T")) {
-                return true;
-            }
+            return secCard.equals("J") || secCard.equals("T");
         }
         
         return false;

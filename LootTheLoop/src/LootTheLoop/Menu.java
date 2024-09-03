@@ -1,7 +1,8 @@
 package LootTheLoop;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Menu {
 
