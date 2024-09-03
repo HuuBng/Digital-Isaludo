@@ -1,6 +1,7 @@
 package LootTheLoop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameDeck extends ArrayList<GameCard> {
     
