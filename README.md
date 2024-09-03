@@ -8,16 +8,13 @@ Link to original playing card version:
 https://boardgamegeek.com/thread/2587399/isaludo-ten-new-solo-card-games-playable-with-a-st
 
 
-
 This was made based on version BETA 1.11
-
-`test`
 
 # Operating system / Tools
 
 - Windows 11
 
-- NetBeans 8.2
+- IntelliJ IDEA Community
 
 - Java 1.8.0_202
 
